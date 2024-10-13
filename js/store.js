@@ -1,16 +1,17 @@
 document.getElementById('submitBtn').addEventListener('click', function() {
     const word = document.getElementById('word').value.trim();
     const definition = document.getElementById('definition').value.trim();
-    const feedback = document.getElementById('feedback');
+    const result = document.getElementById('result');
 
     if (!word || !definition) {
-        feedback.textContent = "Please provide both a word and a definition.";
+        result.textContent = "Please provide both a word and a definition.";
+        result.style.color = "red"; 
         return;
     }
 
-    // Input validation to allow only letters for the word
     if (!/^[a-zA-Z]+$/.test(word)) {
-        feedback.textContent = "Word can only contain letters.";
+        result.textContent = "Word can only contain letters.";
+        result.style.color = "red"; 
         return;
     }
 
@@ -23,9 +24,16 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     })
     .then(response => response.json())
     .then(data => {
-        feedback.textContent = `Request #${data.requestNumber}: ${data.message}`;
+        if (data.success) {
+            result.textContent = `Word and definition stored successfully!`;
+            result.style.color = "green";
+        } else {
+            result.textContent = "An error occurred. Please try again.";
+            result.style.color = "red"; 
+        }
     })
     .catch(error => {
-        feedback.textContent = "An error occurred. Please try again.";
+        result.textContent = "An error occurred. Please try again.";
+        result.style.color = "red"; 
     });
 });

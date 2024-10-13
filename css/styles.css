@@ -55,6 +55,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    margin-top: 15px;
 }
 
 button:hover {
@@ -65,4 +66,16 @@ p {
     margin-top: 20px;
     color: red;
     font-weight: bold;
+}
+
+#responseArea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+#result {
+    color: #000;
+    text-align: center;
 }
