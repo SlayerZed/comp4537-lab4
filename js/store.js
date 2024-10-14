@@ -1,5 +1,5 @@
 // Add an event listener for the 'click' event on the submit button
-document.getElementById('submitBtn').addEventListener('click', function() {
+document.getElementById('submitBtn').addEventListener('click', async function() {
     // Get the value of the 'word' input field and trim any extra spaces
     const word = document.getElementById('word').value.trim();
     // Get the value of the 'definition' input field and trim any extra spaces
@@ -27,15 +27,15 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     const requestData = { word: word, definition: definition };
 
     // Send a POST request to the server to store the word and definition
-    fetch('https://noahbaldwincomp4537-lab4-26062.nodechef.com/', {
-        method: 'POST', // Specify the request method as POST
-        headers: { 'Content-Type': 'application/json' }, // Set the content type to JSON
-        body: JSON.stringify(requestData), // Convert the request data to a JSON string
-    })
-    .then(response => response.json()) // Convert the response to JSON
-    .then(data => {
-        // Check if the word was successfully stored
-        if (data.success) {
+    try {
+        const response = await fetch('https://noahbaldwincomp4537-lab4-26062.nodechef.com/api/', {
+            method: 'POST', // Specify the request method as POST
+            headers: { 'Content-Type': 'application/json' }, // Set the content type to JSON
+            body: JSON.stringify(requestData), // Convert the request data to a JSON string
+        });
+        
+        const data = await response.json();
+        if (data) {
             // Display a success message in green
             result.textContent = `Word and definition stored successfully!`;
             result.style.color = "green"; // Success message will be green
@@ -44,10 +44,9 @@ document.getElementById('submitBtn').addEventListener('click', function() {
             result.textContent = "An error occurred. Please try again.";
             result.style.color = "red"; // Error message will be red
         }
-    })
-    .catch(error => {
+    } catch (error) {
         // Display an error message if the request fails (e.g., network error)
-        result.textContent = "An error occurred. Please try again.";
+        result.textContent = `An error occurred. Please try again. Error: ${error}`;
         result.style.color = "red"; // Error message will be red
-    });
+    }
 });
