@@ -1,13 +1,13 @@
-// Import all required modules for use in the API
+// Import all required modules for use in the server
 const http = require('http'); // Used by both Kaiser and Noah
 const url = require('url'); // Used by both Kaiser and Noah
-const fs = require('fs'); // Used by Noah
+const fs = require('fs'); // Used by both Kaiser and Noah
 
 const port = process.env.PORT || 3000; // Port provided by NodeChef, but 3000 for localhost testing and as backup
 
 // This code is used to get the word parameter, and is from StackOverflow here:
 // https://stackoverflow.com/questions/16903476/node-js-http-get-request-with-query-string-parameters
-const params=function(req){
+const params=function(req){ // Used by Noah
     let q=req.url.split('?'),result={};
     if(q.length>=2){
         q[1].split('&').forEach((item)=>{
@@ -23,22 +23,23 @@ const params=function(req){
 // API endpoints programmed referencing https://morayodeji.medium.com/building-nodejs-api-without-expressjs-or-any-other-framework-977e8768abb1
 
 http.createServer((req, res) => {
-    const reqUrl = url.parse(req.url, true);
-    let request_num = 1; // Track the request count, default to 1
-    fs.readFile("./request_num_tracker.txt", (err, data) => {
+    const reqUrl = url.parse(req.url, true); // Used by both Kaiser and Noah
+    let request_num = 1; // Track the request number, default to 1
+    // Loads the current request number into the variable
+    fs.readFile("./request_num_tracker.txt", (err, data) => { // Used by Noah
         if (err) {
             console.error(err);
             return
         } else {
-            request_num = parseInt(data); // Update to correct request count
+            request_num = parseInt(data); // Update to correct request number
         }
     });
 
-    let getData = (req2, res2) => {
+    let getData = (req2, res2) => { // Used by Noah
         req2.params = params(req2); // Used to get the ?word param from the URL
         let word = req2.params.word.replaceAll("%20", " "); // Replace %20 characters in the URL with spaces
         let response = ``;
-        fs.readFile("./dictionary.json", (err, data) => {
+        fs.readFile("./dictionary.json", (err, data) => { // Used by Noah
             if (err) {
                 // Respond with an error
                 response =
@@ -61,7 +62,7 @@ http.createServer((req, res) => {
                     res2.statusCode = 200; // Success code
                 }
                 // Updates the value stored in the request number tracker
-                fs.writeFile("./request_num_tracker.txt", (++request_num).toString(), err => {
+                fs.writeFile("./request_num_tracker.txt", (++request_num).toString(), err => { // Used by Noah
                     if (err) {
                         console.error(err);
                     } else {
@@ -74,7 +75,7 @@ http.createServer((req, res) => {
         });
     }
 
-    let addData = (req2, res2) => {
+    let addData = (req2, res2) => {// Used by Noah
         let body = ``; // Stores the request body
         req.on('data', (chunk) => { // When data is recieved, update the body with the information
             body += chunk;
@@ -84,7 +85,7 @@ http.createServer((req, res) => {
             let response = ``;
             if (JSON.parse(body)) {
                 let postBody = JSON.parse(body);
-                fs.readFile("./dictionary.json", (err, data) => {
+                fs.readFile("./dictionary.json", (err, data) => { // Used by Noah
                     if (err) {
                         // Respond with an error
                         response =
@@ -144,8 +145,9 @@ ${new_word}
             res2.end(response);
         });
     }
-    
-    let invalidUrl = (req2, res2) => { // If the user attempts an invalid url, then return a JSON with an error message
+
+    // If the user attempts an invalid url, then return a JSON with an error message
+    let invalidUrl = (req2, res2) => { // Used by Noah
         let response =
 `
 {
