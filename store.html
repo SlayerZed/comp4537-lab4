@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Sets the document type and declares this as an HTML5 document -->
+    <meta charset="UTF-8">
+    <!-- Specifies the character encoding for the HTML document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Makes the web page responsive by adjusting its size to the device's screen width -->
+    <title>Store Definition</title>
+    <!-- Sets the title of the page as "Store Definition," which will appear in the browser tab -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Links to the external stylesheet (styles.css) for styling the page -->
+    <script defer src="js/store.js"></script>
+    <!-- Links to the external JavaScript file (store.js) and defers its execution until the page loads -->
+</head>
+<body>
+    <!-- Page content begins here -->
+    
+    <header>
+        <!-- The header section for the page -->
+        <h2>Dictionary Management System</h2>
+        <!-- This is the main heading at the top of the page, labeled "Dictionary Management System" -->
+    </header>
+
+    <div class="container">
+        <!-- Main container that wraps the form content, styled with a background, padding, and box-shadow -->
+        
+        <h1>Store a Word and Its Definition</h1>
+        <!-- Page-specific heading inside the container -->
+
+        <div>
+            <!-- Container for the "Word" input field -->
+            <label for="word">Word:</label>
+            <!-- Label for the "word" input field. The `for` attribute links to the input's ID -->
+            <input type="text" id="word" required>
+            <!-- Input field where the user enters the word. The `id` is used to identify this field in JavaScript. The `required` attribute ensures that this field is not left empty. -->
+        </div>
+
+        <div>
+            <!-- Container for the "Definition" text area -->
+            <label for="definition">Definition:</label>
+            <!-- Label for the "definition" text area -->
+            <textarea id="definition" required></textarea>
+            <!-- Text area where the user enters the definition of the word. The `required` attribute ensures this field is filled out. -->
+        </div>
+        
+        <div>
+            <!-- Container for the response box -->
+            <label for="responseArea">Response:</label>
+            <!-- Label for the response area that displays feedback or success/error messages -->
+            <div id="responseArea">
+                <p id="result"></p>
+                <!-- Paragraph element where the result (either error or success) is displayed dynamically -->
+            </div>
+        </div>
+
+        <button id="submitBtn">Submit</button>
+        <!-- Submit button that triggers the word and definition submission to the server when clicked -->
+    </div>
+</body>
+</html>
