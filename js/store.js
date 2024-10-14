@@ -16,7 +16,7 @@ document.getElementById('submitBtn').addEventListener('click', async function() 
     }
 
     // Validate that the 'word' input contains only letters
-    if (!/^[a-zA-Z]+$/.test(word)) {
+    if (!/^[a-zA-Z\s]+$/.test(word)) {
         // Display an error message if validation fails
         result.textContent = "Word can only contain letters.";
         result.style.color = "red"; // Error message will be red
