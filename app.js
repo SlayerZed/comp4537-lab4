@@ -71,6 +71,9 @@ http.createServer((req, res) => {
                 });
             }
             res2.setHeader('content-Type', 'Application/json');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+            res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
             res2.end(response);
         });
     }
@@ -142,6 +145,9 @@ ${new_word}
                 res2.statusCode = 500; // Internal server error code
             }
             res2.setHeader('content-Type', 'Application.json');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+            res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
             res2.end(response);
         });
     }
@@ -155,6 +161,9 @@ ${new_word}
 }`;
         res2.statusCode = 404; // Not found error code
         res2.setHeader('content-Type', 'Application/json');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
         res2.end(response);
     }
 
