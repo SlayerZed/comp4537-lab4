@@ -158,10 +158,10 @@ ${new_word}
         res2.end(response);
     }
 
-    if (reqUrl.pathname.includes(`/api/definitions`) && req.method === 'GET') {
+    if (req.url.includes(`/api/definitions?word=`)) {
         // Respond with the definition of the word provided
         getData(req, res);
-    } else if (reqUrl.pathname.includes(`/api/definitions`) && req.method === 'POST')  {
+    } else if (req.url.includes(`/api/definitions`))  {
         // Add a new word + definition
         addData(req, res);
     } else {
