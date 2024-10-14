@@ -70,7 +70,7 @@ http.createServer((req, res) => {
                     }
                 });
             }
-            res2.setHeader('content-Type', 'Application/json');
+            res2.setHeader('content-Type', 'application/json');
             res2.setHeader('Access-Control-Allow-Origin', '*');
             res2.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
             res2.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -145,7 +145,7 @@ ${new_word}
 }`;
                 res2.statusCode = 500; // Internal server error code
             }
-            res2.setHeader('content-Type', 'Application.json');
+            res2.setHeader('content-Type', 'application/json');
             res2.setHeader('Access-Control-Allow-Origin', '*');
             res2.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
             res2.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -162,7 +162,7 @@ ${new_word}
     "message": "Oops! Unfortunately that is an invalid API endpoint! Please try either /api/definitions or /api/definitions?word="
 }`;
         res2.statusCode = 404; // Not found error code
-        res2.setHeader('content-Type', 'Application/json');
+        res2.setHeader('content-Type', 'application/json');
         res2.setHeader('Access-Control-Allow-Origin', '*');
         res2.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
         res2.setHeader('Access-Control-Allow-Headers', 'Content-Type');
