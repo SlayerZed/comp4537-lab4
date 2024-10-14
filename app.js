@@ -1,7 +1,7 @@
 // Import all required modules for use in the API
-const http = await import('http');
-const url = await import('url');
-const fs = await import('fs');
+const http = require('http'); // Used by both Kaiser and Noah
+const url = require('url'); // Used by both Kaiser and Noah
+const fs = require('fs'); // Used by Noah
 
 const port = process.env.PORT || 3000; // Port provided by NodeChef, but 3000 for localhost testing and as backup
 
@@ -20,37 +20,54 @@ const params=function(req){
     }
     return result;
 }
-
 // API endpoints programmed referencing https://morayodeji.medium.com/building-nodejs-api-without-expressjs-or-any-other-framework-977e8768abb1
 
 http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
-    if (!localStorage.request_num) localStorage.request_num = 1;
+    let request_num = 1; // Track the request count, default to 1
+    fs.readFile("./request_num_tracker.txt", (err, data) => {
+        if (err) {
+            console.error(err);
+            return
+        } else {
+            request_num = parseInt(data); // Update to correct request count
+        }
+    });
 
     let getData = (req2, res2) => {
-        req2.params = params(req2);
+        req2.params = params(req2); // Used to get the ?word param from the URL
+        let word = req2.params.word.replaceAll("%20", " "); // Replace %20 characters in the URL with spaces
         let response = ``;
         fs.readFile("./dictionary.json", (err, data) => {
             if (err) {
                 // Respond with an error
                 response =
-                `{
-                    "error_message": "An error has occurred, please try again."
-                }`;
+`
+{
+    "error_message": "An error has occurred, please try again."
+}`;
                 res2.statusCode = 500; // Internal server error code
             } else {
                 let dictionary = JSON.parse(data);
-                if (dictionary[req2.params.word]) {
-                    // return word + definition
+                if (dictionary[word]) {
+                    // Respond with the word + definition
                     response =
-                    `{
-                        "requestNumber": ${localStorage.request_num},
-                        "word": "${req2.params.word}",
-                        "definition": "${dictionary[req2.params.word]}"
-                    }`;
+`
+{
+    "requestNumber": ${request_num},
+    "word": "${word}",
+    "definition": "${dictionary[word]}"
+}`;
                     res2.statusCode = 200; // Success code
                 }
-                localStorage.request_num += 1;
+                // Updates the value stored in the request number tracker
+                fs.writeFile("./request_num_tracker.txt", (++request_num).toString(), err => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("File written successfully"); // Request number tracker update successful
+                    }
+                });
             }
             res2.setHeader('content-Type', 'Application/json');
             res2.end(response);
@@ -58,54 +75,69 @@ http.createServer((req, res) => {
     }
 
     let addData = (req2, res2) => {
-        let body = ``;
-        req.on('data', (chunk) => {
+        let body = ``; // Stores the request body
+        req.on('data', (chunk) => { // When data is recieved, update the body with the information
             body += chunk;
         });
 
-        req.on('end', () => {
+        req.on('end', () => { // When the data is finished processing, return the response
             let response = ``;
             if (JSON.parse(body)) {
                 let postBody = JSON.parse(body);
                 fs.readFile("./dictionary.json", (err, data) => {
                     if (err) {
                         // Respond with an error
-                        response = `
-                        {
-                            "error_message": "An error occurred, please try again"
-                        }`;
+                        response =
+`
+{
+    "error_message": "An error occurred, please try again"
+}`;
                         res2.statusCode = 500; // Internal server error code
                     } else {
                         // Successful file read
                         let dictionary = JSON.parse(data);
                         if (dictionary[postBody["word"]]) {
                             // Respond with an error
-                            response = `
-                            {
-                                "error_message": "An error occurred, please try again"
-                            }`;
-                            res2.statusCode = 500; // Internal server error code
+                            response =
+`
+{
+    "error_message": "That word already exists in the dictionary!"
+}`;
+                            res2.statusCode = 400; // Bad request error code
                         } else {
-                            let new_word = `"${postBody["word"]}": "${postBody["definition"]}"`;
-                            let existing_words = data.substring(1, data.length - 2);
+                            // Word does not yet exist, add to the dictionary
+                            let new_word = `"${postBody["word"]}": "${postBody["definition"]}"`; // Create a new word entry for the JSON
+                            let dict_string = JSON.stringify(dictionary);
+                            let existing_words = dict_string.substring(1, dict_string.length - 1);
+                            existing_words = existing_words.replaceAll("\",", "\",\n");
+                            // Updates the dictionary with the new word and proper formatting
                             fs.writeFile("./dictionary.json",
-                                `{
-                                ${existing_words},
-                                    ${new_word}
-                                }`);
-                            response = `
-                            {
-                                "success": true
-                            }`;
+`{
+${existing_words},
+${new_word}
+}`
+                                , err => {
+                                    if (err) {
+                                        console.error(err);
+                                    } else {
+                                        console.log("file written successfully"); // Dictionary update successful
+                                    }
+                                });
+                            response =
+`
+{
+    "success": true
+}`;
                             res2.statusCode = 201; // Successfully created code
                         }
                     }
                 });
             } else {
-                response = `
-                {
-                    "error_message": "An error occurred, please try again"
-                }`;
+                response =
+`
+{
+    "error_message": "An error occurred, please try again"
+}`;
                 res2.statusCode = 500; // Internal server error code
             }
             res2.setHeader('content-Type', 'Application.json');
@@ -113,24 +145,26 @@ http.createServer((req, res) => {
         });
     }
     
-    let invalidUrl = (req2, res2) => {
+    let invalidUrl = (req2, res2) => { // If the user attempts an invalid url, then return a JSON with an error message
         let response =
-        `{
-            "message": "Oops! Unfortunately that is an invalid API endpoint! Please try either /api/definitions or /api/definitions?word="
-        }`;
-        res2.statusCode = 404;
+`
+{
+    "message": "Oops! Unfortunately that is an invalid API endpoint! Please try either /api/definitions or /api/definitions?word="
+}`;
+        res2.statusCode = 404; // Not found error code
         res2.setHeader('content-Type', 'Application/json');
         res2.end(response);
     }
 
-    if (reqUrl.pathname.includes(`/api/definitions?word=`) && req.method === 'GET') {
-        // Add a new word + definition
-        addData(req, res);
-    } else if (reqUrl.pathname.includes(`/api/definitions`) && req.method === 'POST')  {
+    if (reqUrl.pathname.includes(`/api/definitions`) && req.method === 'GET') {
         // Respond with the definition of the word provided
         getData(req, res);
+    } else if (reqUrl.pathname.includes(`/api/definitions`) && req.method === 'POST')  {
+        // Add a new word + definition
+        addData(req, res);
     } else {
         // Respond with invalid url message
         invalidUrl(req, res);
+        console.log(reqUrl.pathname);
     }
 }).listen(port);
