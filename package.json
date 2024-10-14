@@ -4,7 +4,7 @@
   "description": "A dictionary management app",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js"
+    "start" : "node app.js"
   },
   "author": "Kaiser",
   "license": "ISC",
