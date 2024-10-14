@@ -1,81 +1,138 @@
-/* General styles */
+/* General styles for the body */
 body {
     font-family: Arial, sans-serif;
+    /* Sets the font for the entire document */
     margin: 0;
     padding: 0;
+    /* Removes default margins and paddings from the page */
     background-color: #f4f4f4;
+    /* Sets a light grey background color for the page */
 }
 
+/* Styling for the header section */
 header {
     background-color: #653966;
+    /* Sets the background color of the header */
     color: white;
+    /* Makes the text inside the header white */
     text-align: center;
+    /* Centers the header text horizontally */
     padding: 20px 0;
+    /* Adds padding to the top and bottom of the header */
     font-size: 24px;
+    /* Sets the font size of the header text */
 }
 
+/* Styling for all h1 headings */
 h1 {
     color: #333;
+    /* Sets a dark grey color for the h1 headings */
     text-align: center;
+    /* Centers the h1 headings horizontally */
     margin-bottom: 20px;
+    /* Adds space below the h1 headings */
 }
 
+/* Main container styling */
 .container {
     background-color: #8bbcbe;
+    /* Sets the background color of the container to a light teal */
     padding: 20px;
+    /* Adds padding inside the container */
     border-radius: 8px;
+    /* Rounds the corners of the container */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* Adds a subtle box shadow to give a slightly elevated effect */
     width: 400px;
+    /* Sets the width of the container */
     text-align: center;
+    /* Centers the content inside the container */
     margin: 0 auto;
+    /* Horizontally centers the container within the page */
     margin-top: 50px;
+    /* Adds space above the container */
 }
 
+/* Styling for all labels */
 label {
     display: inline-block;
+    /* Ensures the label behaves like a block element while keeping it inline with others */
     width: 100px;
+    /* Sets a fixed width for the label */
     font-weight: bold;
+    /* Makes the label text bold */
     text-align: center;
+    /* Centers the text inside the label */
     margin-bottom: 10px;
+    /* Adds space below the label */
 }
 
+/* Styling for input fields and text areas */
 input, textarea {
     padding: 8px;
+    /* Adds padding inside the input and textarea fields */
     width: 90%;
+    /* Sets the width to 90% of the container */
     margin-bottom: 15px;
+    /* Adds space below the input and textarea fields */
     border: 1px solid #ccc;
+    /* Adds a light grey border around the input and textarea fields */
     border-radius: 4px;
+    /* Rounds the corners of the input and textarea fields */
 }
 
+/* Styling for buttons */
 button {
     padding: 10px 20px;
+    /* Adds padding to the button (top-bottom, left-right) */
     background-color: #4CAF50;
+    /* Sets the button's background color to green */
     color: white;
+    /* Makes the text inside the button white */
     border: none;
+    /* Removes any borders from the button */
     border-radius: 4px;
+    /* Rounds the corners of the button */
     cursor: pointer;
+    /* Changes the cursor to a pointer (hand icon) when hovering over the button */
     font-size: 16px;
+    /* Sets the font size of the button text */
     margin-top: 15px;
+    /* Adds space above the button */
 }
 
+/* Hover effect for buttons */
 button:hover {
     background-color: #45a049;
+    /* Changes the background color to a slightly darker green when hovering over the button */
 }
 
+/* Styling for the paragraph element (mainly for error messages) */
 p {
     margin-top: 20px;
+    /* Adds space above the paragraph element */
     color: red;
+    /* Makes the text red, typically used for error messages */
     font-weight: bold;
+    /* Makes the paragraph text bold */
 }
 
+/* Styling for the response area box */
 #responseArea {
     padding: 10px;
+    /* Adds padding inside the response box */
     border: 1px solid #ccc;
+    /* Adds a light grey border around the response box */
     border-radius: 4px;
+    /* Rounds the corners of the response box */
     background-color: #fff;
+    /* Sets the background color of the response box to white */
 }
 
+/* Styling for the result text inside the response area */
 #result {
     color: #000;
+    /* Sets the text color to black for normal messages (e.g., success or information) */
     text-align: center;
+    /* Centers the text inside the response box */
 }

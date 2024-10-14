@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Sets the document type and declares this as an HTML5 document -->
     <meta charset="UTF-8">
+    <!-- Specifies the character encoding for the HTML document -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Makes the web page responsive by adjusting its size to the device's screen width -->
     <title>Search Definition</title>
+    <!-- Sets the title of the page as "Search Definition," which will appear in the browser tab -->
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Links to the external stylesheet (styles.css) for styling the page -->
     <script defer src="js/search.js"></script>
+    <!-- Links to the external JavaScript file (search.js) and defers its execution until the page loads -->
 </head>
 <body>
+    <!-- Page content begins here -->
+    
     <header>
+        <!-- The header section for the page -->
         <h2>Dictionary Management System</h2>
+        <!-- This is the main heading at the top of the page, labeled "Dictionary Management System" -->
     </header>
 
     <div class="container">
+        <!-- Main container that wraps the form content, styled with a background, padding, and box-shadow -->
+
         <h1>Search for a Word</h1>
+        <!-- Page-specific heading inside the container -->
+
         <div>
+            <!-- Container for the "Word" input field -->
             <label for="word">Word:</label>
+            <!-- Label for the "word" input field. The `for` attribute links to the input's ID -->
             <input type="text" id="word" required>
+            <!-- Input field where the user enters the word they want to search for. The `id` is used to identify this field in JavaScript. The `required` attribute ensures this field is not left empty. -->
         </div>
-        
+
         <div>
+            <!-- Container for the response box -->
             <label for="responseArea">Response:</label>
+            <!-- Label for the response area that displays feedback or error messages -->
             <div id="responseArea">
                 <p id="result"></p>
+                <!-- Paragraph element where the result (either error or found definition) is displayed dynamically -->
             </div>
         </div>
 
         <button id="searchBtn">Search</button>
+        <!-- Search button that triggers the search operation when clicked -->
     </div>
 </body>
 </html>
