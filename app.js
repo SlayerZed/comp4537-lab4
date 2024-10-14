@@ -5,7 +5,7 @@ const fs = require('fs'); // Used by both Kaiser and Noah
 
 // Define the port number where the server will listen for incoming requests.
 // Uses the environment variable 'PORT' if defined, otherwise defaults to 3000.
-const port = process.env.PORT || 3000; // Port provided by NodeChef/Azure, but 3000 for localhost testing and as backup
+const port = process.env.PORT || 3000;
 
 // Kaiser's server code:
 // Create the HTTP server

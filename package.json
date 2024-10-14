@@ -1,4 +1,13 @@
 {
+  "name": "comp4537-lab4",
+  "version": "1.0.0",
+  "description": "A dictionary management app",
+  "main": "app.js",
+  "scripts": {
+    "start" : "node app.js"
+  },
+  "author": "Kaiser",
+  "license": "ISC",
   "dependencies": {
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
