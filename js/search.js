@@ -22,7 +22,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
     }
 
     // Send a GET request to the server to search for the word's definition
-    fetch(`https://yourDomainName2.xyz/api/definitions?word=${word}`)
+    fetch(`https://noahbaldwincomp4537-lab4-26062.nodechef.com/api/definitions?word=${word}`)
     .then(response => response.json()) // Convert the response to JSON
     .then(data => {
         // Check if the word was found in the dictionary

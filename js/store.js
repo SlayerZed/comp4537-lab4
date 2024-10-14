@@ -27,7 +27,7 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     const requestData = { word: word, definition: definition };
 
     // Send a POST request to the server to store the word and definition
-    fetch('https://yourDomainName2.xyz/api/definitions', {
+    fetch('https://noahbaldwincomp4537-lab4-26062.nodechef.com/', {
         method: 'POST', // Specify the request method as POST
         headers: { 'Content-Type': 'application/json' }, // Set the content type to JSON
         body: JSON.stringify(requestData), // Convert the request data to a JSON string
